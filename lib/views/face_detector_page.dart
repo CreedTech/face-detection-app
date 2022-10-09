@@ -17,6 +17,7 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
   late ui.Image imageFile;
   bool imageLoaded = false;
   late List<Face> faces = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +37,17 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
                       foregroundPainter: ImagePainter(faces, imageFile),
                       // child: imageLoaded?Image.file(imageFile):const Text('No Image'),
                     )
-                  : Container(),
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: const Center(
+                        child: Text(
+                          "No Face Available",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.deepOrange,
@@ -51,7 +62,7 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
         children: [
           FloatingActionButton(
             child: const Icon(Icons.camera),
-            onPressed: (){
+            onPressed: () {
               showDialog(
                 context: context,
                 builder: (context) {
@@ -61,7 +72,8 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
                     actions: [
                       ElevatedButton(
                         onPressed: () async {
-                          List<Face> faceList = await faceDetect(context, ImageSource.camera);
+                          List<Face> faceList =
+                              await faceDetect(context, ImageSource.camera);
                           setState(() {
                             faces = faceList;
                           });
@@ -70,7 +82,8 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
                       ),
                       ElevatedButton(
                         onPressed: () async {
-                          List<Face> faceList = await faceDetect(context, ImageSource.gallery);
+                          List<Face> faceList =
+                              await faceDetect(context, ImageSource.gallery);
                           setState(() {
                             faces = faceList;
                           });
@@ -99,7 +112,7 @@ class _FaceDetectorPageState extends State<FaceDetectorPage> {
     });
     List<Face> faceList = await Utils().faceDetector(image.path);
     setState(() {
-      faces=faceList;
+      faces = faceList;
     });
   }
 }
@@ -121,7 +134,7 @@ class ImagePainter extends CustomPainter {
     for (var face in faces) {
       canvas.drawRect(face.boundingBox, paint);
     }
-    canvas.drawRect(const Offset(0,0) & Size(size.width, size.height), paint);
+    canvas.drawRect(const Offset(0, 0) & Size(size.width, size.height), paint);
   }
 
   @override

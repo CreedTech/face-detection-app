@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:face_detection/utils/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,6 +18,7 @@ class _OcrPageState extends State<OcrPage> {
   String finalText = "No Text";
   String imagePath = "";
   Utils utils = Utils();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,15 +34,30 @@ class _OcrPageState extends State<OcrPage> {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
-                child: isLoaded? Image.file(imageFile) : const Text("No Image"),
+                child: isLoaded
+                    ? Image.file(imageFile)
+                    : Container(
+                  margin: const EdgeInsets.only(top: 20),
+                      child: const Center(
+                          child: Text("No Image", style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),),
+                        ),
+                    ),
               ),
             ),
+            const Divider( thickness: 2,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: SingleChildScrollView(
-                  child: Text(finalText),
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 100.0),
+                    child: Center(child: Text(finalText, style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),),),
+                  ),
                 ),
               ),
             ),
@@ -49,10 +66,10 @@ class _OcrPageState extends State<OcrPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.camera),
-        onPressed: (){
+        onPressed: () {
           showDialog(
             context: context,
-            builder: (context){
+            builder: (context) {
               return AlertDialog(
                 title: const Text("Source"),
                 content: const Text("Select the source"),
@@ -77,14 +94,17 @@ class _OcrPageState extends State<OcrPage> {
       ),
     );
   }
+
   performOcr(context, source) async {
     Navigator.of(context).pop();
     File image = await utils.pickImage(source, false, 0);
-    File imageCropped =  await utils.cropImage(image);
+    File imageCropped = await utils.cropImage(image);
     setState(() {
       isLoaded = true;
       imageFile = imageCropped;
-      print("Image Cropped");
+      if (kDebugMode) {
+        print("Image Cropped");
+      }
     });
     String content = await utils.textOcr(imageCropped.path);
     setState(() {
