@@ -1,9 +1,11 @@
 import 'package:face_detection/bloc/theme_bloc.dart';
 import 'package:face_detection/views/face_detector_page.dart';
+import 'package:face_detection/views/graphics_page.dart';
 import 'package:face_detection/views/home_page.dart';
 import 'package:face_detection/views/ocr_page.dart';
 import 'package:face_detection/views/qr_code_page.dart';
 import 'package:face_detection/views/qr_scan_page.dart';
+import 'package:face_detection/views/user_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.face_detection">
    <application
-        android:label="face_detection"
+        android:label="DetectQue"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

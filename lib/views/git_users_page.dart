@@ -33,7 +33,7 @@ class GitUsersPage extends StatelessWidget {
                     controller: _textEditingController,
                     decoration: const InputDecoration(
                       contentPadding: EdgeInsets.fromLTRB(10, 2, 10, 10),
-                      suffixIcon: Icon(Icons.visibility),
+                      // suffixIcon: Icon(Icons.visibility),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         borderSide: BorderSide(
